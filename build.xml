@@ -1,0 +1,35 @@
+<project name="frangel" default="frangel-jar">
+    <property name="src" location="src"/>
+    <property name="bin" location="bin"/>
+    <property name="lib" location="lib/"/>
+    <property name="jarfile" location="frangel.jar"/>
+
+    <path id="class.path">
+        <fileset dir="${lib}">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="init" description="create the build directory">
+        <mkdir dir="${bin}"/>
+    </target>
+
+    <target name="compile" depends="init" description="compile FrAngel">
+        <javac srcdir="${src}" destdir="${bin}" includeantruntime="false" debug="true">
+            <classpath refid="class.path"/>
+        </javac>
+    </target>
+
+    <target name="frangel-jar" depends="compile" description="generate the FrAngel JAR file">
+        <jar jarfile="${jarfile}" basedir="${bin}"/>
+    </target>
+
+    <target name="clean" description="clean up the build directory">
+        <delete dir="${bin}"/>
+    </target>
+
+    <target name="clean-all" depends="clean" description="clean up all generated files">
+        <delete file="${jarfile}"/>
+    </target>
+</project>
+

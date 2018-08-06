@@ -1,0 +1,261 @@
+{
+    "comment": [
+        "All comments are optional and ignored.",
+
+        "Excluding classes:",
+        "  - If a class is given by its full name, it also matches its subclasses (i.e., they are also excluded).",
+        "  - Entire packages can also be excluded by using a wildcard (*). In this case, subclasses are not automatically matched.",
+        
+        "Excluding constructors/methods:",
+        "  - In method names, a single wildcard is supported at the beginning or end.",
+        "  - Parameters are specified by their index and type. The type must exactly match the type in the constructor/method signature.",
+        "  - A constructor/method is matched if it matches all listed parameters, even if there are other unlisted parameters."
+    ],
+    
+    "classes": [
+        {
+            "types": [
+                "java.lang.Runnable",
+                "java.lang.Thread",
+                "java.lang.ThreadGroup",
+                "java.lang.ThreadLocal",
+                "java.lang.Process",
+                "java.lang.ProcessBuilder",
+                "java.lang.ProcessBuilder$Redirect"
+            ],
+            "comment": "Don't do thread/process things"
+        },
+        {
+            "types": [
+                "java.lang.ClassLoader",
+                "java.lang.Compiler",
+                "java.lang.Runtime",
+                "java.lang.SecurityManager",
+                "java.lang.System"
+            ],
+            "comment": "Can cause bad side-effects"
+        },
+        {
+            "types": [
+                "java.lang.instrument.*",
+                "java.lang.invoke.*",
+                "java.lang.management.*",
+                "java.lang.reflect.*"
+            ],
+            "comment": "Can cause bad side-effects"
+        },
+        {
+            "types": [
+                "java.io.Writer",
+                "java.io.OutputStream",
+                "java.nio.file.Files"
+            ],
+            "comment": "Don't write files"
+        },
+        {
+            "types": ["javax.swing.text.View"],
+            "comment": "Views seem to spawn threads"
+        },
+        {
+            "types": ["javax.xml.bind*"],
+            "comment": "Don't bind XML to files"
+        },
+        {
+            "types": ["org.apache.commons.math3.analysis.polynomials.PolynomialsUtils"],
+            "comment": "Don't create huge polynomials"
+        },
+        {
+            "types": [
+                "javax.xml.soap*",
+                "javax.xml.transform.TransformerFactory"
+            ],
+            "comment": "Creates lots of System.err messages"
+        },
+        {
+            "types": ["com.alibaba.fastjson.parser.JSONLexer"],
+            "comment": "scanning can stall for several sec"
+        },
+        {
+            "types": ["com.alibaba.fastjson.serializer.SerializeConfig"],
+            "comment": "don't change config settings"
+        }
+    ],
+    
+    "constructors": [
+        {
+            "types": [
+                "java.util.Set",
+                "java.util.Map",
+                "java.util.List",
+                "java.util.Queue"
+            ],
+            "parameters": {"0": "int"},
+            "comment": "The first argument is the initial capacity, which we can't afford to set to (say) Integer.MAX_VALUE"
+        },
+        {
+            "types": ["java.awt.geom.Path2D"],
+            "parameters": {"1": "int"},
+            "comment": "The second argument is the initial capacity, which we can't afford to set to (say) Integer.MAX_VALUE"
+        },
+        {
+            "types": [
+                "javax.xml.transform.stream.StreamSource",
+                "org.xml.sax.InputSource"
+            ],
+            "parameters": {"0": "java.lang.String"},
+            "comment": "Don't fetch a URL (which takes seconds to timeout)"
+        }
+    ],
+    
+    "methods": [
+        {
+            "type": "java.lang.Object",
+            "names": [
+                "intern",
+                "clone",
+                "hashCode",
+                "wait",
+                "notify",
+                "notifyAll",
+                "ensureCapacity",
+                "toString"
+            ],
+            "comment": "hashCode and toString can be nondeterministic. ensureCapacity can use too much memory."
+        },
+        {
+            "type": "java.lang.Object",
+            "names": [
+                "loadClass",
+                "findClass"
+            ],
+            "comment": "don't load classes"
+        },
+        {
+            "type": "java.lang.Integer",
+            "names": ["getInteger"],
+            "comment": "depends on system properties"
+        },
+        {
+            "type": "java.lang.Long",
+            "names": ["getLong"],
+            "comment": "depends on system properties"
+        },
+        {
+            "type": "java.lang.Boolean",
+            "names": ["getBoolean"],
+            "comment": "depends on system properties"
+        },
+        {
+            "type": "java.io.File",
+            "names": ["*"],
+            "comment": "Don't use any File methods, only constructors (don't write/delete random files)"
+        },
+        {
+            "type": "java.util.Collections",
+            "names": ["nCopies"],
+            "comment": "Can use too much memory"
+        },
+        {
+            "type": "java.lang.Math",
+            "names": ["random"],
+            "comment": "Nondeterministic"
+        },
+        {
+            "type": "java.lang.String",
+            "names": [
+                "matches",
+                "replaceAll",
+                "replaceFirst"
+            ],
+            "comment": "regex with many special characters can be exponential-time"
+        },
+        {
+            "type": "java.lang.String",
+            "names": ["valueOf"],
+            "parameters": {"0": "java.lang.Object"},
+            "comment": "valueOf(array) is nondeterministic"
+        },
+        {
+            "type": "java.awt.geom.Path2D",
+            "names": ["append"],
+            "comment": "Appending a path to itself in a loop uses exponential memory"
+        },
+        {
+            "type": "org.joda.time.DateTimeUtils",
+            "names": ["setCurrentMillis*"],
+            "comment": "Don't mess with current time"
+        },
+        {
+            "type": "org.joda.time.DateTimeZone",
+            "names": ["set*"],
+            "comment": "Don't mess with current time zone or providers"
+        },
+        {
+            "type": "org.joda.time.ReadablePartial",
+            "names": [
+                "getHourOf*",
+                "getMinuteOf*",
+                "getSecondOf*",
+                "getMillisOf*",
+                "hourOf*",
+                "minuteOf*",
+                "secondOf*",
+                "millisOf*"
+            ],
+            "comment": "E.g., the current second of minute is nondeterministic"
+        },
+        {
+            "type": "org.joda.time.ReadableInstant",
+            "names": [
+                "getHourOf*",
+                "getMinuteOf*",
+                "getSecondOf*",
+                "getMillisOf*",
+                "hourOf*",
+                "minuteOf*",
+                "secondOf*",
+                "millisOf*",
+                "isBefore*",
+                "isAfter*",
+                "isEqual*"
+            ],
+            "comment": "The current second of minute is nondeterministic, isBefore uses millisecond precision and is nondeterministic when comparing two calls to DateTime.now()"
+        },
+        {
+            "type": "org.joda.time.LocalDateTime$Property",
+            "names": ["roundCeilingCopy"],
+            "comment": "Can stall for ~4 sec"
+        },
+        {
+            "type": "javax.xml.parsers.DocumentBuilder",
+            "names": ["parse"],
+            "parameters": {"0": "java.lang.String"},
+            "comment": "Don't fetch a URL"
+        },
+        {
+            "type": "org.xml.sax.helpers.XMLReaderAdapter",
+            "names": ["parse"],
+            "parameters": {"0": "java.lang.String"},
+            "comment": "Don't fetch a URL"
+        },
+        {
+            "type": "javax.xml.namespace.QName",
+            "names": ["getNamespaceURI"],
+            "comment": "Don't fetch a URL"
+        },
+        {
+            "type": "java.lang.Object",
+            "names": [
+                "createXMLStreamReader",
+                "createXMLEventReader"
+            ],
+            "parameters": {"0": "java.lang.String"},
+            "comment": "Don't fetch a URL"
+        },
+        {
+            "type": "com.alibaba.fastjson.parser.ParserConfig",
+            "names": ["checkAutoType"],
+            "comment": "attempts to load classes"
+        }
+    ]
+}

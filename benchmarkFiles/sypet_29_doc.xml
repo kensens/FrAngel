@@ -1,0 +1,28 @@
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div id="container">
+    <a></a>
+    <div id="header">
+        <div id="firstchild">
+            <div>
+                <img></img>
+            </div>
+            <a></a>
+            <ul>
+                <li>
+                    <a>Inbox</a>
+                </li>
+                <li>
+                    <a>Logout</a>
+                </li>
+            </ul>
+            <form></form>
+        </div>
+        <div id="nextsibling"></div>
+    </div>
+</div>
+</body>
+</html>
