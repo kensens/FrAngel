@@ -15,7 +15,7 @@
     </target>
 
     <target name="compile" depends="init" description="compile FrAngel">
-        <javac srcdir="${src}" destdir="${bin}" includeantruntime="false" debug="true">
+        <javac srcdir="${src}" destdir="${bin}" source="1.8" target="1.8" includeantruntime="false" debug="true">
             <classpath refid="class.path"/>
         </javac>
     </target>
