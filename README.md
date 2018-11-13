@@ -51,6 +51,6 @@ This will take a long time to run, since there are over 100 benchmarks, each wit
 
 The strategies of "mining fragments" and "angelic conditions" can be toggled by replacing `true` with `false`. Modify `main.sh` to configure where output files are written (`-results-folder`) or the time limit in seconds (`-time`). Various other settings can be modified at `src/frangel/Settings.java`.
 
-Our experiments used the provided `Dockerfile`.
+Our experiments used the provided `Dockerfile`, using Java 8 from Oracle.
 
 Note: Occasionally FrAngel will randomly invoke a library method with arguments that cause that library method to infinite loop, which in turn causes FrAngel to wait forever. Under normal conditions, FrAngel will print out results for each benchmark as soon as it is solved or the timeout is reached. Thus, if 30 minutes (or the chosen time limit) have passed without progress on the benchmarks, then FrAngel must be restarted.
