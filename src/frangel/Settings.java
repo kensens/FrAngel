@@ -27,7 +27,7 @@ public class Settings {
     public static int VERBOSE = 0;
     public static final int PROGRESS_DELAY = 10; // Seconds between progress output at VERBOSE >= 1
     public static final boolean LOG_TIMING = false;
-    public static boolean CONSOLE_COLORS = false;
+    public static boolean CONSOLE_COLORS = true;
 
 
     ////////////////////////
@@ -38,7 +38,7 @@ public class Settings {
     public static boolean RUN_ALL_IN_GROUP = false;
     public static TaskCreator TASK_CREATOR = null;
     public static SynthesisTask TASK = (TASK_CREATOR == null ? null : TASK_CREATOR.createTask().setGroup(BenchmarkGroup.findGroup(TASK_CREATOR).toString()));
-    public static BenchmarkGroup BENCHMARK_GROUP = BenchmarkGroup.CONTROL_STRUCTURES;
+    public static BenchmarkGroup BENCHMARK_GROUP = null; // BenchmarkGroup.CONTROL_STRUCTURES;
 
     public static boolean CHECK_SOLUTIONS = false;
     public static boolean COUNT_EXAMPLES_AND_COMPONENTS = false;
@@ -68,18 +68,23 @@ public class Settings {
     public static boolean SYPET_MODE = false; // Set in Main.java
     public static final boolean HARDCODE_POLYMORPHISM = true; // Hardcode (as in SyPet) specific polymorphism rules
     @SuppressWarnings("serial")
-    public static final Map<Class<?>, Set<Class<?>>> POLYMORPHISM_MAP = new HashMap<Class<?>, Set<Class<?>>>() {{ // from SyPet's CONFIG.json
-        put(java.awt.Shape.class, new HashSet<>(Arrays.asList(java.awt.geom.Ellipse2D.class, java.awt.geom.Rectangle2D.class)));
-        put(org.joda.time.ReadablePartial.class, new HashSet<>(Arrays.asList(org.joda.time.LocalDate.class)));
-        put(org.joda.time.ReadableInstant.class, new HashSet<>(Arrays.asList(org.joda.time.DateTime.class)));
-        put(org.w3c.dom.Node.class, new HashSet<>(Arrays.asList(org.w3c.dom.Element.class)));
-        put(org.jsoup.nodes.Element.class, new HashSet<>(Arrays.asList(org.jsoup.nodes.Document.class)));
-        put(java.io.Reader.class, new HashSet<>(Arrays.asList(java.io.StringReader.class)));
-        put(org.joda.time.base.AbstractDateTime.class, new HashSet<>(Arrays.asList(org.joda.time.DateTime.class)));
-        put(java.lang.Object.class, new HashSet<>(Arrays.asList(org.w3c.dom.Document.class)));
-        put(org.joda.time.field.AbstractReadableInstantFieldProperty.class, new HashSet<>(Arrays.asList(org.joda.time.DateTime.Property.class)));
-        put(org.apache.commons.math.linear.SingularValueDecomposition.class, new HashSet<>(Arrays.asList(org.apache.commons.math.linear.SingularValueDecompositionImpl.class)));
-    }};
+    public static Map<Class<?>, Set<Class<?>>> POLYMORPHISM_MAP = null;
+    public static void loadSyPetPolymorphismMap() {
+        if (POLYMORPHISM_MAP == null) {
+            POLYMORPHISM_MAP = new HashMap<Class<?>, Set<Class<?>>>() {{ // from SyPet's CONFIG.json
+                put(java.awt.Shape.class, new HashSet<>(Arrays.asList(java.awt.geom.Ellipse2D.class, java.awt.geom.Rectangle2D.class)));
+                put(org.joda.time.ReadablePartial.class, new HashSet<>(Arrays.asList(org.joda.time.LocalDate.class)));
+                put(org.joda.time.ReadableInstant.class, new HashSet<>(Arrays.asList(org.joda.time.DateTime.class)));
+                put(org.w3c.dom.Node.class, new HashSet<>(Arrays.asList(org.w3c.dom.Element.class)));
+                put(org.jsoup.nodes.Element.class, new HashSet<>(Arrays.asList(org.jsoup.nodes.Document.class)));
+                put(java.io.Reader.class, new HashSet<>(Arrays.asList(java.io.StringReader.class)));
+                put(org.joda.time.base.AbstractDateTime.class, new HashSet<>(Arrays.asList(org.joda.time.DateTime.class)));
+                put(java.lang.Object.class, new HashSet<>(Arrays.asList(org.w3c.dom.Document.class)));
+                put(org.joda.time.field.AbstractReadableInstantFieldProperty.class, new HashSet<>(Arrays.asList(org.joda.time.DateTime.Property.class)));
+                put(org.apache.commons.math.linear.SingularValueDecomposition.class, new HashSet<>(Arrays.asList(org.apache.commons.math.linear.SingularValueDecompositionImpl.class)));
+            }};
+        }
+    }
 
 
     /////////////////////////
@@ -89,6 +94,7 @@ public class Settings {
     public static int RUN = -1;
     public static String RESULTS_FOLDER = "results/json/";
     public static final String EXCLUDED_JSON_FILE = "excluded.json";
+    public static final boolean EXCLUDED_WARNINGS = false;
 
 
     ///////////////////////

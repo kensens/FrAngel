@@ -138,6 +138,8 @@ public class Main {
             List<Integer> numComponents = new ArrayList<>();
             for (SynthesisTask task : tasks) {
                 Settings.SYPET_MODE = BenchmarkGroup.SYPET.toString().equals(task.getGroup());
+                if (Settings.SYPET_MODE)
+                    Settings.loadSyPetPolymorphismMap();
                 numExamples.add(task.getExamples().size());
                 task.finalizeSetup();
                 JavaFunctionLoader.resetData(task);
@@ -161,6 +163,8 @@ public class Main {
         int success = 0, total = 0;
         for (SynthesisTask task : tasks) {
             Settings.SYPET_MODE = BenchmarkGroup.SYPET.toString().equals(task.getGroup());
+            if (Settings.SYPET_MODE)
+                Settings.loadSyPetPolymorphismMap();
             FrAngelResult result = runTask(task);
             if (result.isSuccess())
                 success++;

@@ -90,7 +90,8 @@ public class Excluded {
                 try {
                     return new ClassOrPackage(Utils.classFromString(str));
                 } catch (ClassNotFoundException e) {
-                    System.err.println("Error while deserializing json string to class: " + str);
+                    if (Settings.EXCLUDED_WARNINGS)
+                        System.err.println("Error while deserializing json string to class: " + str);
 //                    e.printStackTrace();
                     return null;
                 }
