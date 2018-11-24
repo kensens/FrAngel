@@ -41,7 +41,7 @@ If you clone this repository and make changes to FrAngel's source code (in `src/
 
 ## Running the experiments
 
-All runs for the experiments in the FrAngel paper can be found on [CodaLab](https://worksheets.codalab.org/worksheets/0x882075c0b92c4a2d85abdbd3d76aad78/).
+The FrAngel paper is on [arXiv](https://arxiv.org/abs/1811.05175). All runs for the experiments in the paper can be found on [CodaLab](https://worksheets.codalab.org/worksheets/0x882075c0b92c4a2d85abdbd3d76aad78/).
 
 To run FrAngel on all of the benchmarks, use the following:
 
