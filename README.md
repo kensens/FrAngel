@@ -38,10 +38,19 @@ If you clone this repository and make changes to FrAngel's source code (in `src/
 
     ant frangel-jar
 
+## Publication
+
+The FrAngel paper is on [arXiv](https://arxiv.org/abs/1811.05175) and was presented at POPL 2019:
+
+> Kensen Shi, Jacob Steinhardt, Percy Liang.
+> [**FrAngel: Component-Based Synthesis with Control Structures.**](https://dl.acm.org/citation.cfm?doid=3302515.3290386)
+> ACM SIGPLAN Symposium on Principles of Programming Languages (POPL), 2019.
+
+The presentation video and slides are on the [POPL site](https://popl19.sigplan.org/event/popl-2019-research-papers-frangel-component-based-synthesis-with-control-structures).
 
 ## Running the experiments
 
-The FrAngel paper is on [arXiv](https://arxiv.org/abs/1811.05175). All runs for the experiments in the paper can be found on [CodaLab](https://worksheets.codalab.org/worksheets/0x882075c0b92c4a2d85abdbd3d76aad78/).
+All runs for the experiments in the paper can be found on [CodaLab](https://worksheets.codalab.org/worksheets/0x882075c0b92c4a2d85abdbd3d76aad78/).
 
 To run FrAngel on all of the benchmarks, use the following:
 
